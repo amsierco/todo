@@ -1,0 +1,1 @@
+(()=>{"use strict";const t=()=>({createProject:function(t,e){return this.title=t,this.description=e,console.log(this.title+"    "+this.description),{title:t,description:e}}});let e=t().createProject("A","A"),i=t().createProject("B","B");console.log(e.title+"   "+e.description),console.log(i.title+"   "+i.description)})();
