@@ -1,0 +1,14 @@
+.thumbnail-prompt {
+    background-color: cyan;
+    /* width: clamp(200px, fit-content, fit-content); */
+    width: 5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form * {
+    max-width: 200px;
+}
