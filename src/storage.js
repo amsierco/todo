@@ -1,11 +1,15 @@
-// import {project} from "./project";
+import {project} from "./project";
 
-// const projectStorage = () => {
-//     let storage = [];
-//     const getStorage = () => {return storage;};
-//     const addToStorage = (obj) => {storage.push(obj);};
+export const projectStorage = (() => {
+    let storage = [];
+    function getStorage() {
+        //console.log('Storage called: '+storage);
+        return storage;
+    }
+    function addToStorage(obj) {
+        //console.log('Add storage called: '+obj);
+        storage.push(obj);
+    }
 
-//     return {getStorage, addToStorage};
-// };
-
-// export {projectStorage};
+    return {getStorage, addToStorage};
+})();

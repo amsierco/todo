@@ -5,6 +5,7 @@
 
 .thumbnail-prompt.active {
     display: flex;
+    flex-direction: column;
     background-color: whitesmoke;
     max-width: 200px;    
     margin: 0px;

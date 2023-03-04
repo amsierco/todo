@@ -6,15 +6,16 @@ export const project = (() => {
     function createProject(title, description) {
         this.title = title;
         this.description = description;
+        function changeTitle(newTitle) {this.title = newTitle;}
+        function changeDescription(description) {this.description = description;}
+        return{title, description, changeTitle};
     }
 
-    function changeTitle(title) {this.title = title;}
-    function changeDescription(description) {this.description = description;}
 
     return {createProject};
 })();
 
 //Testing
-let A = project;
-A.createProject('B','C');
-console.log(A.title+" "+A.description);
+// let A = project;
+// A.createProject('B','C');
+// console.log(A.title+" "+A.description);

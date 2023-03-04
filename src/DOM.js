@@ -9,15 +9,20 @@ export const getDOM = (() => {
     };
 
 })();
-//Test
-getDOM.newProjectButton.style.backgroundColor = "red";
 
 export const displayProjectPrompts = (() => {
 
-    const thumbnailPrompt = () => {
-        const thumbnailPrompt = document.createElement('div');
-        thumbnailPrompt.classList.toggle('thumbnail-prompt');
-        thumbnailPrompt.classList.toggle('active');
+    const thumbnailPrompt = _createThumbnail(); 
+
+    // Initially create the thumbnail prompt container
+    function _createThumbnail() {
+
+        if(document.querySelector('.thumbnail-prompt') != null){
+            document.querySelector('.thumbnail-prompt').remove();
+        }
+
+        let thumbnailModal = document.createElement('div');
+        thumbnailModal.setAttribute('class', 'thumbnail-prompt');
 
         let thumbnailHeader = document.createElement('div');
         thumbnailHeader.textContent = 'Enter Project Data';
@@ -25,6 +30,7 @@ export const displayProjectPrompts = (() => {
         let thumbnailForm = document.createElement('form');
         thumbnailForm.setAttribute('name', 'thumbnail-form');
         thumbnailForm.setAttribute('class', 'thumbnail-form');
+        //thumbnailForm.setAttribute('method', 'post');
 
         let thumbnailContentOne = document.createElement('div');
         let titleLabel = document.createElement('label');
@@ -34,27 +40,35 @@ export const displayProjectPrompts = (() => {
         titleInput.setAttribute('class', 'title');
         titleInput.setAttribute('id', 'title');
         titleInput.setAttribute('type', 'text');
+        titleInput.required = true;
         thumbnailContentOne.append(titleLabel, titleInput);
 
         let thumbnailContentTwo = document.createElement('div');
         let descriptionLabel = document.createElement('label');
         descriptionLabel.textContent = 'Description';
         let descriptionInput = document.createElement('input');
+        descriptionInput.required = true;
         thumbnailContentTwo.append(descriptionLabel, descriptionInput);
 
         let thumbnailSubmit = document.createElement('button');
         thumbnailSubmit.setAttribute('type', 'submit');
         thumbnailSubmit.textContent = 'Submit';
 
-        thumbnailPrompt.appendChild(thumbnailHeader);
-        thumbnailPrompt.appendChild(thumbnailForm);
+        thumbnailModal.appendChild(thumbnailHeader);
+        thumbnailModal.appendChild(thumbnailForm);
         thumbnailForm.append(
             thumbnailContentOne,
             thumbnailContentTwo,
             thumbnailSubmit);
-        document.body.appendChild(thumbnailPrompt);
 
-        return {thumbnailPrompt};
+        getDOM.thumbnailContainer.appendChild(thumbnailModal);
+
+        return {
+            thumbnailModal,
+            titleInput,
+            descriptionInput,
+            thumbnailSubmit,
+            thumbnailForm};
     }
 
     return {
@@ -63,4 +77,3 @@ export const displayProjectPrompts = (() => {
 
 })();
 
-//displayProjectPrompts.thumbnailPrompt();
