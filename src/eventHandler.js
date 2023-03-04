@@ -2,6 +2,7 @@ import { getDOM } from "./DOM";
 import { displayProjectPrompts } from "./DOM";
 import { project } from "./project";
 import { projectStorage } from "./storage";
+import { displayProjectPreview } from "./DOM";
 
 
 export const addNewProject = (() => {
@@ -9,10 +10,12 @@ export const addNewProject = (() => {
     const prompt = displayProjectPrompts.thumbnailPrompt;
     var newProject;
 
+    // New project event
     getDOM.newProjectButton.addEventListener('click', () => {
         prompt.thumbnailModal.classList.toggle('active');
     });
 
+    // Project thumbnail on form submit event
     prompt.thumbnailForm.addEventListener('submit', e => {
         e.preventDefault();
         let _title = prompt.thumbnailForm.elements[0].value;
@@ -21,11 +24,17 @@ export const addNewProject = (() => {
         prompt.thumbnailModal.classList.remove('active');
 
         newProject = project.createProject(_title, _description);
-        newProject.changeTitle('Bananas!');
+        //newProject.changeTitle('Bananas!');
         projectStorage.addToStorage(newProject);
         
+        displayProjectPreview.createPreview(_title, _description);
+
         //TESTING
-        console.log('POST: '+projectStorage.getStorage()[0].title+' '+projectStorage.getStorage()[0].description);
+        /*
+        Array.from(projectStorage.getStorage()).forEach(p => 
+            console.log(p.title+' '+p.description)
+        );console.log('             ');
+        */
     });
 
 })();

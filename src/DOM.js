@@ -1,11 +1,20 @@
+import { projectStorage } from "./storage";
+
 export const getDOM = (() => {   
 
     let newProjectButton = document.querySelector('.new-project-button');
     let thumbnailContainer = document.querySelector('.thumbnail-container');
- 
+    let previewContainer = document.querySelector('.preview-container');
+
+    //TESTING ONlY
+    document.querySelector('.TEST').addEventListener('click', e => {
+        projectStorage.getStorage()[1].changeTitle('Independece is workin!');
+    });
+
     return{
         newProjectButton,
-        thumbnailContainer
+        thumbnailContainer,
+        previewContainer
     };
 
 })();
@@ -13,7 +22,6 @@ export const getDOM = (() => {
 export const displayProjectPrompts = (() => {
 
     const thumbnailPrompt = _createThumbnail(); 
-
     // Initially create the thumbnail prompt container
     function _createThumbnail() {
 
@@ -70,10 +78,25 @@ export const displayProjectPrompts = (() => {
             thumbnailSubmit,
             thumbnailForm};
     }
-
-    return {
-        thumbnailPrompt
-    };
+    return {thumbnailPrompt};
 
 })();
 
+export const displayProjectPreview = (() => {
+
+    function createPreview(_title, _description) {
+        let card = document.createElement('div');
+        card.setAttribute('class', 'preview');
+
+        let title = document.createElement('div');
+        title.textContent = _title;
+        let description = document.createElement('div');
+        description.textContent = _description;
+        card.append(title, description);
+
+        getDOM.previewContainer.appendChild(card);
+    }
+
+    return {createPreview};
+
+})();
