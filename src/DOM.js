@@ -14,15 +14,17 @@ getDOM.newProjectButton.style.backgroundColor = "red";
 
 export const displayProjectPrompts = (() => {
 
-    function thumbnailPrompt () {
+    const thumbnailPrompt = () => {
         const thumbnailPrompt = document.createElement('div');
         thumbnailPrompt.classList.toggle('thumbnail-prompt');
-
-        let thumbnailForm = document.createElement('form');
-        thumbnailForm.setAttribute('name', 'thumbnail-form');
+        thumbnailPrompt.classList.toggle('active');
 
         let thumbnailHeader = document.createElement('div');
         thumbnailHeader.textContent = 'Enter Project Data';
+
+        let thumbnailForm = document.createElement('form');
+        thumbnailForm.setAttribute('name', 'thumbnail-form');
+        thumbnailForm.setAttribute('class', 'thumbnail-form');
 
         let thumbnailContentOne = document.createElement('div');
         let titleLabel = document.createElement('label');
@@ -41,16 +43,18 @@ export const displayProjectPrompts = (() => {
         thumbnailContentTwo.append(descriptionLabel, descriptionInput);
 
         let thumbnailSubmit = document.createElement('button');
+        thumbnailSubmit.setAttribute('type', 'submit');
+        thumbnailSubmit.textContent = 'Submit';
 
+        thumbnailPrompt.appendChild(thumbnailHeader);
         thumbnailPrompt.appendChild(thumbnailForm);
         thumbnailForm.append(
-            thumbnailHeader,
             thumbnailContentOne,
             thumbnailContentTwo,
             thumbnailSubmit);
-
         document.body.appendChild(thumbnailPrompt);
 
+        return {thumbnailPrompt};
     }
 
     return {
@@ -59,4 +63,4 @@ export const displayProjectPrompts = (() => {
 
 })();
 
-displayProjectPrompts.thumbnailPrompt();
+//displayProjectPrompts.thumbnailPrompt();
