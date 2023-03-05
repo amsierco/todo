@@ -1,3 +1,9 @@
+/* Body Default */
+body {
+    background-color: black;
+    display: block;
+}
+
 /* Thumbnail Card */
 .thumbnail-prompt {
     display: none;
@@ -13,6 +19,10 @@
     overflow: hidden;
     border-radius: 5px;
     box-shadow: 0 0 10px 2px rgba(200,200,200,1);
+
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .thumbnail-form {
@@ -66,4 +76,17 @@
     background-color: wheat;
 }
 
+.preview:hover {
+    box-shadow: 0 0 10px 0px rgba(0,0,0,0.8);
+}
+
+/* Header */
+.header {
+    display: grid;
+    background-color: bisque;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    height: 50px;
+    padding: 5px;
+    text-align: center;
+}
 

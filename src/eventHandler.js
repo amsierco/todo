@@ -27,8 +27,11 @@ export const addNewProject = (() => {
         //newProject.changeTitle('Bananas!');
         projectStorage.addToStorage(newProject);
         
-        displayProjectPreview.createPreview(_title, _description);
-
+        let card = displayProjectPreview.createPreview(_title, _description);
+        card.addEventListener('click', () => {
+            document.body.style.display = 'none';
+        });
+        
         //TESTING
         /*
         Array.from(projectStorage.getStorage()).forEach(p => 

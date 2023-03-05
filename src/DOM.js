@@ -6,11 +6,6 @@ export const getDOM = (() => {
     let thumbnailContainer = document.querySelector('.thumbnail-container');
     let previewContainer = document.querySelector('.preview-container');
 
-    //TESTING ONlY
-    document.querySelector('.TEST').addEventListener('click', e => {
-        projectStorage.getStorage()[1].changeTitle('Independece is workin!');
-    });
-
     return{
         newProjectButton,
         thumbnailContainer,
@@ -85,7 +80,7 @@ export const displayProjectPrompts = (() => {
 export const displayProjectPreview = (() => {
 
     function createPreview(_title, _description) {
-        let card = document.createElement('div');
+        let card = document.createElement('button');
         card.setAttribute('class', 'preview');
 
         let title = document.createElement('div');
@@ -95,6 +90,7 @@ export const displayProjectPreview = (() => {
         card.append(title, description);
 
         getDOM.previewContainer.appendChild(card);
+        return card;
     }
 
     return {createPreview};
