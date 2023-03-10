@@ -1,15 +1,9 @@
-//import {project} from "./project";
-
+// Page project storage
 export const projectStorage = (() => {
-    
     let storage = [];
 
-    function getStorage() {
-        return storage;
-    }
-    function addToStorage(obj) {
-        storage.push(obj);
-    }
+    const getStorage = () => {return storage;}
+    const addToStorage = (obj) => {storage.push(obj);}
 
     return {getStorage, addToStorage};
 })();

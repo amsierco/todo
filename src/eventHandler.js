@@ -1,43 +1,34 @@
 import { getDOM } from "./DOM";
-import { displayProjectPrompts } from "./DOM";
-import { project } from "./project";
+import { thumbnailPrompt } from "./DOM";
+import { displayThumbnail } from "./DOM";
+import { Project } from "./project";
 import { projectStorage } from "./storage";
-import { displayProjectPreview } from "./DOM";
 
 
-export const addNewProject = (() => {
 
-    const prompt = displayProjectPrompts.thumbnailPrompt;
-    var newProject;
+export const AddNewProject = (() => {
+    const prompt = thumbnailPrompt;
 
-    // New project event
+    // Display thumbnail prompt
     getDOM.newProjectButton.addEventListener('click', () => {
         prompt.thumbnailModal.classList.toggle('active');
     });
 
     // Project thumbnail on form submit event
     prompt.thumbnailForm.addEventListener('submit', e => {
+
+        // Collect form data
         e.preventDefault();
-        let _title = prompt.thumbnailForm.elements[0].value;
-        let _description = prompt.thumbnailForm.elements[1].value;
+        let title = prompt.thumbnailForm.elements[0].value;
+        let description = prompt.thumbnailForm.elements[1].value;
         prompt.thumbnailForm.reset();
         prompt.thumbnailModal.classList.remove('active');
 
-        newProject = project.createProject(_title, _description);
-        //newProject.changeTitle('Bananas!');
+        // Create new project object and add to storage
+        let newProject = Project().create(title, description);
         projectStorage.addToStorage(newProject);
         
-        let card = displayProjectPreview.createPreview(_title, _description);
-        card.addEventListener('click', () => {
-            document.body.style.display = 'none';
-        });
-        
-        //TESTING
-        /*
-        Array.from(projectStorage.getStorage()).forEach(p => 
-            console.log(p.title+' '+p.description)
-        );console.log('             ');
-        */
+        // Display preview card
+        let card= displayThumbnail(title, description);
     });
-
 })();

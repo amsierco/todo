@@ -5,6 +5,10 @@ body {
 }
 
 /* Thumbnail Card */
+.new-project-button:active {
+    transform: translateY(1px);
+}
+
 .thumbnail-prompt {
     display: none;
 }
