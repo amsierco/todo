@@ -1,11 +1,21 @@
 
 // Get basic DOM elements
 export const getDOM = (() => {   
+    const mainPage = document.querySelector('.main-page');
+    const projectPage = document.querySelector('.project-page');
     const newProjectButton = document.querySelector('.new-project-button');
     const thumbnailContainer = document.querySelector('.thumbnail-container');
     const previewContainer = document.querySelector('.preview-container');
 
+    //TEMP
+    document.querySelector('.TEMP').addEventListener('click', () => {
+        mainPage.classList.toggle('active');
+        projectPage.classList.toggle('active');
+    });
+
     return{
+        mainPage,
+        projectPage,
         newProjectButton,
         thumbnailContainer,
         previewContainer
@@ -71,8 +81,9 @@ export const thumbnailPrompt = (() => {
 })();
 
 // Displays thumbnail content
-export const displayThumbnail = ((title, description) => {
+export const displayThumbnail = (title, description) => {
     if(title ==  null || description == null){return;}
+
     // Creates DOM preview based on inputs
     let thumbnail = document.createElement('button');
     thumbnail.setAttribute('class', 'preview');
@@ -83,6 +94,49 @@ export const displayThumbnail = ((title, description) => {
     thumbnail.append(newTitle, newDescription);
     getDOM.previewContainer.appendChild(thumbnail);
 
-    return {thumbnail};
-});
+    return (thumbnail);
+}
 
+// Create project window
+export const projectWindow = (() => {
+
+    let container = document.createElement('div');
+    container.setAttribute('class', 'todo-container');
+
+
+
+    let taskArray = [];
+    for(let i=0; i<3; i++){
+        let column = document.createElement('div');
+        column.setAttribute('class', 'column');
+        let header = document.createElement('div');
+        header.setAttribute('class', 'column-header');
+        let content = document.createElement('div');
+        content.setAttribute('class', 'column-content');
+        var newCardButton = document.createElement('button');
+        newCardButton.setAttribute('class', 'new-card-button');
+        newCardButton.textContent = 'Add Card';
+
+        header.textContent ='header';
+        content.textContent ='content';
+
+        column.append(
+            header,
+            content,
+            newCardButton
+        );
+        taskArray.push(column);
+        container.appendChild(taskArray[i]);
+    }
+
+    taskArray[0].classList.toggle('todo');
+    taskArray[1].classList.toggle('in-progress');
+    taskArray[2].classList.toggle('done');
+
+    return{container};
+})();
+
+// Loads specific project window
+// export const loadPage = (obj) => {
+
+// }

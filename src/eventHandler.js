@@ -3,8 +3,19 @@ import { thumbnailPrompt } from "./DOM";
 import { displayThumbnail } from "./DOM";
 import { Project } from "./project";
 import { projectStorage } from "./storage";
+import { projectWindow } from "./DOM";
 
+const loadProjectPage = (obj) => {
+    console.log('Loading page: '+obj.title);
 
+    getDOM.mainPage.classList.toggle('active');
+    let page = getDOM.projectPage;
+
+    // Fill in page with stored data //
+
+    page.classList.toggle('active');
+    page.appendChild(projectWindow.container);
+}
 
 export const AddNewProject = (() => {
     const prompt = thumbnailPrompt;
@@ -25,10 +36,16 @@ export const AddNewProject = (() => {
         prompt.thumbnailModal.classList.remove('active');
 
         // Create new project object and add to storage
-        let newProject = Project().create(title, description);
+        let newProject = Project();
+        newProject.create(title, description);
         projectStorage.addToStorage(newProject);
         
         // Display preview card
-        let card= displayThumbnail(title, description);
+        let thumbnail = displayThumbnail(title, description);
+        thumbnail.addEventListener('click', () => {
+            loadProjectPage(newProject);
+        });
+
     });
+
 })();

@@ -1,7 +1,10 @@
-/* Body Default */
-body {
-    background-color: black;
+/* Main Page */
+.main-page.active {
     display: block;
+}
+
+.main-page {
+    display: none;
 }
 
 /* Thumbnail Card */
@@ -53,6 +56,10 @@ body {
     text-align: center;
 }
 
+.thumbnail-form > button.active{
+    transform: translateY(1px);
+}
+
 /* Project Preview Card */
 .preview-container {
     display: grid;
@@ -94,3 +101,41 @@ body {
     text-align: center;
 }
 
+/* Project Page */
+.project-page {
+    display: none;
+}
+
+.project-page.active {
+    display: block;
+}
+
+/*TEMP*/
+
+.todo-container {
+    background-color: aqua;
+    width: 100%;
+    height: 500px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 10px;
+    padding: 10px;
+}
+
+.todo-container .column {
+    height: 300px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.todo-container .column-header {
+    background-color: red;
+}
+.todo-container .column-content {
+    background-color: green;
+}
+.todo-container .new-card-button {
+    background-color: purple;
+}
