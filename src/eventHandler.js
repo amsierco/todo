@@ -23,7 +23,7 @@ window.addEventListener('load', () => {
             initialStorage[i].date
         );
 
-        projectStorage.addToStorage(newProject);// console.log('done');
+        projectStorage.addToStorage(newProject);
 
         let retrievedThumbnail = displayThumbnail(
             initialStorage[i].title,
@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
             let page = getDOM.projectPage;
             page.classList.toggle('active');
             page.appendChild(projectWindow.container);
-            projectStorage.setActiveProject(newProject); // Unknown
+            projectStorage.setActiveProject(newProject);
             loadProjectPage();
         });
     }
@@ -47,8 +47,7 @@ window.addEventListener('load', () => {
 
 // Load project page
 const loadProjectPage = () => {
-    //console.log('todo: '+projectStorage.getActiveProject().todo.length+' prog: '+projectStorage.getActiveProject().inProgress.length+' done: '+projectStorage.getActiveProject().done.length);
-    
+    console.log('title: '+projectStorage.getActiveProject().title+' todo: '+projectStorage.getActiveProject().todo.length+' prog: '+projectStorage.getActiveProject().inProgress.length+' done: '+projectStorage.getActiveProject().done.length);
     // Active project reference
     let active = projectStorage.getActiveProject();
 
@@ -110,16 +109,16 @@ export const AddNewCard = (obj) => {
 
         // Add to appropriate storage in project class
         if(info != null){
-            console.log(typeof(projectStorage.getActiveProject()));
             projectStorage.getActiveProject().add(type, info, date);
         }
+
+        projectStorage.populateExternalStorage();
 
         // Display new card
         loadProjectPage();
 
     }, { once: true });
 
-    projectStorage.populateExternalStorage();
 };
 
 // Create new project

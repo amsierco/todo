@@ -16,24 +16,19 @@ export const projectStorage = (() => {
     function populateExternalStorage() {
         localStorage.setItem("projectData", JSON.stringify(storage));
         localStorage.setItem("activeProject", JSON.stringify(active));
-        //console.log('update: '+JSON.stringify(storage));
+        console.log('update: '+JSON.stringify(storage));
     }
 
     const getExternalStorage = () => {
-        //console.log('External Storage Fetch Called!');
-        storage = [];
-        tempStorage = JSON.parse(localStorage.getItem("projectData"));
+        console.log('External Storage Fetch Called!');
+        //storage = [];
+        storage = JSON.parse(localStorage.getItem("projectData"));
         if(localStorage.getItem("activeProject") != 'undefined'){
             active = JSON.parse(localStorage.getItem("activeProject"));
         }
-        return (tempStorage);
-        //console.log('retrieve: '+JSON.parse(localStorage.getItem("projectData")).length);
+        console.log('OG storage: '+storage);
+        return (storage);
     };
-
-    // if(storage != undefined || active != undefined){
-    //     storage.onchange = populateExternalStorage();
-    //     active.onchange = populateExternalStorage();
-    // }
 
     return {
         getStorage, 
