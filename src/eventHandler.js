@@ -11,29 +11,38 @@ import { parse } from "date-fns";
 
 // On page load
 window.addEventListener('load', () => {
-    projectStorage.getExternalStorage();
-    let initialStorage = projectStorage.getStorage();
+    let initialStorage = projectStorage.getExternalStorage();
+    console.log('Retrieved length: '+initialStorage.length);
 
     // Thumbnails
-    // console.log(initialStorage.length);
-    // for(let i=0; i<initialStorage.length; i++){
-    //     //displayThumbnail(title, description, date)
-    //     displayThumbnail(
-    //         initialStorage[i].title,
-    //         initialStorage[i].description,
-    //         initialStorage[i].date
-    //     );
+    for(let i=0; i<initialStorage.length; i++){
+        let newProject = Project();
+        newProject.create(
+            initialStorage[i].title,
+            initialStorage[i].description,
+            initialStorage[i].date
+        );
 
-    //     console.log(
-    //         initialStorage[i].title+' '+
-    //         initialStorage[i].description+' '+
-    //         initialStorage[i].date
-    //     );
+        projectStorage.addToStorage(newProject);// console.log('done');
 
-        //getDOM.thumbnailContainer.append(initialStorage[i]);
-    // }
+        let retrievedThumbnail = displayThumbnail(
+            initialStorage[i].title,
+            initialStorage[i].description,
+            initialStorage[i].date
+        );
 
-    console.log('page loaded!');
+        // Load project page
+        retrievedThumbnail.addEventListener('click', () => {
+            console.log('New button clicked!');
+            getDOM.mainPage.classList.toggle('active');
+            let page = getDOM.projectPage;
+            page.classList.toggle('active');
+            page.appendChild(projectWindow.container);
+            projectStorage.setActiveProject(newProject); // Unknown
+            loadProjectPage();
+        });
+    }
+
 });
 
 // Load project page
@@ -101,6 +110,7 @@ export const AddNewCard = (obj) => {
 
         // Add to appropriate storage in project class
         if(info != null){
+            console.log(typeof(projectStorage.getActiveProject()));
             projectStorage.getActiveProject().add(type, info, date);
         }
 
