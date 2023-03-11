@@ -205,3 +205,20 @@ export const cardPrompt = (() => {
     };
 
 })();
+
+// Displays card content
+export const displayCard = (info, date) => {
+    if(info ==  null || date == null){return;}
+
+    // Creates DOM preview based on inputs
+    let card = document.createElement('div');
+    card.setAttribute('class', 'info');
+    let newinfo = document.createElement('div');
+    newinfo.textContent = info;
+    let newdate = document.createElement('div');
+    newdate.textContent = date;
+    card.append(newinfo, newdate);
+    getDOM.previewContainer.appendChild(card);
+
+    return (card);
+}

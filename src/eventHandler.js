@@ -6,14 +6,45 @@ import { projectStorage } from "./storage";
 import { projectWindow } from "./DOM";
 import { cardPrompt } from "./DOM";
 import { card } from "./DOM";
+import { displayCard } from "./DOM";
 
 // Load project page
-const loadProjectPage = (page) => {
-    // todo
-    for(let i=0; i<page.todo.length; i++){
-        let newCard = card.container;
-        projectWindow.taskArray[0].querySelector('.column-content').appendChild(newCard);
-        console.log('added!');
+const loadProjectPage = () => {
+    //console.log('todo: '+projectStorage.getActiveProject().todo.length+' prog: '+projectStorage.getActiveProject().inProgress.length+' done: '+projectStorage.getActiveProject().done.length);
+    
+    // Active project reference
+    let active = projectStorage.getActiveProject();
+
+    // Wipe children
+    projectWindow.taskArray[0].querySelector('.column-content').replaceChildren();
+    projectWindow.taskArray[1].querySelector('.column-content').replaceChildren();
+    projectWindow.taskArray[2].querySelector('.column-content').replaceChildren();
+
+    // Todo
+    for(let i=0; i<active.todo.length; i++){
+        let newCard = displayCard(
+            active.todo[i].info,
+            active.todo[i].date
+        );
+        projectWindow.taskArray[0].querySelector('.column-content').append(newCard);
+    }
+
+    // In-progress
+    for(let i=0; i<active.inProgress.length; i++){
+        let newCard = displayCard(
+            active.inProgress[i].info,
+            active.inProgress[i].date
+        );
+        projectWindow.taskArray[1].querySelector('.column-content').append(newCard);
+    }
+
+    // Done
+    for(let i=0; i<active.done.length; i++){
+        let newCard = displayCard(
+            active.done[i].info,
+            active.done[i].date
+        );
+        projectWindow.taskArray[2].querySelector('.column-content').append(newCard);
     }
     
 
@@ -37,6 +68,7 @@ export const AddNewCard = (obj) => {
         let info = prompt.cardForm.elements[0].value;
         let date = prompt.cardForm.elements[1].value;
         prompt.cardForm.reset();
+
         prompt.cardModal.classList.remove('active');
 
         // Add to appropriate storage in project class
@@ -45,9 +77,9 @@ export const AddNewCard = (obj) => {
         }
 
         // Display new card
-        loadProjectPage(projectStorage.getActiveProject());
+        loadProjectPage();
 
-    });
+    }, { once: true });
 };
 
 // Create new project
@@ -84,7 +116,7 @@ export const AddNewProject = (() => {
             page.classList.toggle('active');
             page.appendChild(projectWindow.container);
             projectStorage.setActiveProject(newProject);
-            loadProjectPage(projectStorage.getActiveProject());
+            loadProjectPage();
         });
     });
 })();
