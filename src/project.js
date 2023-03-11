@@ -24,13 +24,12 @@ export const Project = () => {
 
 
     function add(_type, _info, _date){
-        let card = Card(_info, _date);
         if(_type === 'todo'){
-            todo.push(card);
+            this.todo.push(Card(_info, _date));
         } else if (_type === 'in-progress'){
-            inProgress.push(card);
+            this.inProgress.push(Card(_info, _date));
         } else if (_type === 'done'){
-            done.push(card);
+            this.done.push(Card(_info, _date));
         }
     }
 

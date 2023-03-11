@@ -137,8 +137,10 @@ export const projectWindow = (() => {
     taskArray[0].classList.toggle('todo');
     taskArray[1].classList.toggle('in-progress');
     taskArray[2].classList.toggle('done');
-
-    return{container};
+    return {
+        container,
+        taskArray
+    };
 })();
 
 // Create project cards
@@ -154,7 +156,11 @@ export const card = (() => {
 
     container.append(info, date);
 
-    return {container};
+    return {
+        container,
+        info,
+        date
+    };
 })();
 
 // Create card prompt window

@@ -5,16 +5,17 @@ import { Project } from "./project";
 import { projectStorage } from "./storage";
 import { projectWindow } from "./DOM";
 import { cardPrompt } from "./DOM";
+import { card } from "./DOM";
 
-// // Load project page
-const loadProjectPage = (obj) => {
-    //console.log('Loading page: '+obj.title);
-    getDOM.mainPage.classList.toggle('active');
-    let page = getDOM.projectPage;
-    page.classList.toggle('active');
-    page.appendChild(projectWindow.container);
-    projectStorage.setActiveProject(obj);
-    // LOAD PAGE //
+// Load project page
+const loadProjectPage = (page) => {
+    // todo
+    for(let i=0; i<page.todo.length; i++){
+        let newCard = card.container;
+        projectWindow.taskArray[0].querySelector('.column-content').appendChild(newCard);
+        console.log('added!');
+    }
+    
 
 }
 
@@ -23,12 +24,10 @@ export const AddNewCard = (obj) => {
     /*
     HTML class must be column followed by type
     */
-    //console.log(obj.getAttribute('class').substring(7)); //Error on input class obj
 
     document.querySelector('.todo-container').appendChild(cardPrompt.cardModal);
     const prompt = cardPrompt;
     let type = obj.getAttribute('class').substring(7);
-    /*projectStorage.getActiveProject;*/
 
     prompt.cardModal.classList.toggle('active');
     prompt.cardForm.addEventListener('submit', e => {
@@ -40,12 +39,13 @@ export const AddNewCard = (obj) => {
         prompt.cardForm.reset();
         prompt.cardModal.classList.remove('active');
 
+        // Add to appropriate storage in project class
         if(info != null){
-            console.log(projectStorage.getActiveProject.title);
-            //projectStorage.getActiveProject.add(type, info, date);
-            console.log('Card Added');
-            //console.log(projectStorage.getActiveProject.todo);
+            projectStorage.getActiveProject().add(type, info, date);
         }
+
+        // Display new card
+        loadProjectPage(projectStorage.getActiveProject());
 
     });
 };
@@ -74,13 +74,17 @@ export const AddNewProject = (() => {
         newProject.create(title, description);
         projectStorage.addToStorage(newProject);
 
-        projectStorage.setActiveProject(newProject);
-        console.log('test: '+projectStorage.getActiveProject().title);
-
         // Display preview card
         let thumbnail = displayThumbnail(title, description);
+
+        // Load project page
         thumbnail.addEventListener('click', () => {
-           loadProjectPage(newProject);
+            getDOM.mainPage.classList.toggle('active');
+            let page = getDOM.projectPage;
+            page.classList.toggle('active');
+            page.appendChild(projectWindow.container);
+            projectStorage.setActiveProject(newProject);
+            loadProjectPage(projectStorage.getActiveProject());
         });
     });
 })();
