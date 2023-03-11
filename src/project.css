@@ -1,4 +1,23 @@
-/* Main Page */
+/*
+Hex codes: Beige #DDC3A5, Black-brown #201E20, Tan #E0A96D
+Beige #DDD0C8, dark grey #323232
+*/
+
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+    --primary: #DDD0C8;
+    --secondary: #323232;
+    --tertiary: #201E20;
+    font-family: optima, sans-serif;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Main Page */  
 .main-page.active {
     display: block;
 }
@@ -8,9 +27,19 @@
 }
 
 /* Thumbnail Card */
+.new-project-button{
+    background-color: var(--primary);
+    color: var(--secondary);
+    border-radius: 5px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 7px;
+}
+
 .new-project-button:active {
     transform: translateY(1px);
 }
+
 
 .thumbnail-prompt {
     display: none;
@@ -21,11 +50,11 @@
     flex-direction: column;
     background-color: whitesmoke;
     max-width: 200px;    
-    margin: 0px;
+
     padding: 0.75rem;
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 0 0 10px 2px rgba(200,200,200,1);
+    /* box-shadow: 0 0 10px 2px rgba(200,200,200,1); */
 
     position: absolute;
     left: 0;
@@ -36,7 +65,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 15px;
     width: 100%;
 }
 
@@ -56,50 +85,64 @@
     text-align: center;
 }
 
-.thumbnail-form > button.active{
-    transform: translateY(1px);
-}
-
 /* Project Preview Card */
 .preview-container {
     display: grid;
-
     /* Make if more adaptable */
     grid-template-columns: repeat(5, 1fr);
-
     gap: 5px;
     padding: 5px;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 300px;
-    background-color: green;
+
+    width: min(1000px, 100vw);
+    height: min(800px, 100vh);
+    background-color: var(--primary);
 }
 
 .preview {
     display: flex;
     flex-direction: column;
-    padding: 6px;
-    align-items: center;
-    width: 100px;
-    height: 100px;
+    padding: .5rem;
+    align-items: flex-start;
+    min-width: 100px;
+    min-height: 100px;
+    max-height: 150px;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    flex-wrap: wrap;
     border-radius: 5px;
-    border: 2px solid black;
-    background-color: wheat;
+    border-bottom-right-radius: 20px;
+    background-color: var(--secondary);
+    font-size: .8rem;
+    color: var(--primary);
+}
+
+.preview > .header {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .preview:hover {
-    box-shadow: 0 0 10px 0px rgba(0,0,0,0.8);
+    /* box-shadow: 0 0 10px 0px rgba(0,0,0,0.5); */
+    transform: translateY(2px);
 }
 
 /* Header */
-.header {
+.main-page.active > .header {
     display: grid;
-    background-color: bisque;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    height: 50px;
+    background-color: var(--secondary);
+    color: var(--primary);
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    align-items: center;
+    min-height: 50px;
+    max-height: 10%;
     padding: 5px;
     text-align: center;
+    font-weight: 500;
+    font-size: 2rem;
 }
+
+
 
 /* Project Page */
 .project-page {
@@ -110,12 +153,10 @@
     display: block;
 }
 
-/*TEMP*/
-
 .todo-container {
-    background-color: aqua;
-    width: 100%;
-    height: 500px;
+    background-color: var(--primary);
+    width: min(1000px, 100vw);
+    height: min(800px, 100vh);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 10px;
@@ -123,30 +164,58 @@
 }
 
 .todo-container .column {
-    height: 300px;
-    background-color: black;
+    height: min(800px, 90%);
+    background-color: var(--secondary);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: min(10px, 5%);
+    padding: 0px;
+    position: relative;
+    border: 5px solid var(--secondary);
+    border-radius: 10px;
 }
 
 .todo-container .column-header {
-    background-color: red;
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 2rem;
+    border-radius: 10px;
+    text-align: center;
 }
 .todo-container .column-content {
-    background-color: green;
+    color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .75rem;
+    overflow: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    max-height: 90%;
 }
+
 .todo-container .new-card-button {
-    background-color: purple;
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 1rem;
+    position: absolute;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+    border-radius: 10px;
 }
 
 .card {
-    width: 30px;
-    height: 30px;
-    background-color: orange;
+    border: 2px solid var(--primary);
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
-    gap: 5%;
+    gap: 7px;
+    padding: 7px;
+    overflow: none;
+    font-size: 1.1rem;
 }
 
 .thumbnail-prompt {

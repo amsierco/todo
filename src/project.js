@@ -1,4 +1,4 @@
-// // Card Class
+// Card Class
 const Card = (_info, _date) => {
     let info = _info;
     let date = _date;
@@ -22,7 +22,7 @@ export const Project = () => {
         this.done = [];
     }
 
-
+    // Add card function
     function add(_type, _info, _date){
         if(_type === 'todo'){
             this.todo.push(Card(_info, _date));

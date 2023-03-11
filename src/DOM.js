@@ -89,6 +89,7 @@ export const displayThumbnail = (title, description) => {
     let thumbnail = document.createElement('button');
     thumbnail.setAttribute('class', 'preview');
     let newTitle = document.createElement('div');
+    newTitle.setAttribute('class', 'header');
     newTitle.textContent = title;
     let newDescription = document.createElement('div');
     newDescription.textContent = description;
@@ -122,8 +123,9 @@ export const projectWindow = (() => {
             AddNewCard(newCardButton.parentNode);
         });
 
-        header.textContent ='header';
-        content.textContent ='content';
+        if(i==0){header.textContent = 'Todo'}
+        else if(i==1){header.textContent = 'In Progress'}
+        else if(i==2){header.textContent = 'Done'}
 
         column.append(
             header,
@@ -131,39 +133,20 @@ export const projectWindow = (() => {
             newCardButton
         );
         taskArray.push(column);
-        container.appendChild(taskArray[i]);
+        container.append(taskArray[i]);
     }
 
     taskArray[0].classList.toggle('todo');
     taskArray[1].classList.toggle('in-progress');
     taskArray[2].classList.toggle('done');
+
     return {
         container,
         taskArray
     };
 })();
 
-// Create project cards
-export const card = (() => {
-    let container = document.createElement('div');
-    container.setAttribute('class', 'card');
-
-    let info = document.createElement('div');
-    info.setAttribute('class', 'info');
-
-    let date = document.createElement('div');
-    date.setAttribute('class', 'date');
-
-    container.append(info, date);
-
-    return {
-        container,
-        info,
-        date
-    };
-})();
-
-// Create card prompt window
+// Displays card prompt
 export const cardPrompt = (() => {
     if(document.querySelector('.card-prompt') != null){
         document.querySelector('.card-prompt').remove();
@@ -212,12 +195,14 @@ export const displayCard = (info, date) => {
 
     // Creates DOM preview based on inputs
     let card = document.createElement('div');
-    card.setAttribute('class', 'info');
-    let newinfo = document.createElement('div');
-    newinfo.textContent = info;
-    let newdate = document.createElement('div');
-    newdate.textContent = date;
-    card.append(newinfo, newdate);
+    card.setAttribute('class', 'card');
+    let newInfo = document.createElement('div');
+    newInfo.setAttribute('class', 'info');
+    newInfo.textContent = info;
+    let newDate = document.createElement('div');
+    newDate.setAttribute('class', 'date');
+    newDate.textContent = date;
+    card.append(newInfo, newDate);
     getDOM.previewContainer.appendChild(card);
 
     return (card);

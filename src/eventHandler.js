@@ -1,12 +1,12 @@
 import { getDOM } from "./DOM";
 import { thumbnailPrompt } from "./DOM";
 import { displayThumbnail } from "./DOM";
-import { Project } from "./project";
-import { projectStorage } from "./storage";
 import { projectWindow } from "./DOM";
 import { cardPrompt } from "./DOM";
-import { card } from "./DOM";
 import { displayCard } from "./DOM";
+import { Project } from "./project";
+import { projectStorage } from "./storage";
+
 
 // Load project page
 const loadProjectPage = () => {
