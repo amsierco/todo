@@ -1,7 +1,15 @@
+import { parse } from "date-fns";
+import { format } from "date-fns";
+
 // Card Class
 const Card = (_info, _date) => {
     let info = _info;
     let date = _date;
+    
+    if(date != ''){
+        date = parse(date, 'yyyy-MM-dd', new Date());
+        date = format(date, 'MM/dd/yyyy');
+    }
 
     return{
         info,
@@ -11,12 +19,13 @@ const Card = (_info, _date) => {
 
 // Project Class
 export const Project = () => {
-    let todo, inProgress, done, title, description;
+    let todo, inProgress, done, title, description, date;
     
     // Constructor
-    function create(_title, _description) {
+    function create(_title, _description, _date) {
         this.title = _title;
         this.description = _description;
+        this.date = _date;
         this.todo = [];
         this.inProgress = [];
         this.done = [];

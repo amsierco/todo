@@ -55,8 +55,16 @@ export const thumbnailPrompt = (() => {
     let descriptionLabel = document.createElement('label');
     descriptionLabel.textContent = 'Description';
     let descriptionInput = document.createElement('input');
-    descriptionInput.required = true;
+    descriptionInput.required = false;
     thumbnailContentTwo.append(descriptionLabel, descriptionInput);
+
+    let thumbnailContentThree = document.createElement('div');
+    let dateLabel = document.createElement('label');
+    dateLabel.textContent = 'Date';
+    let dateInput = document.createElement('input');
+    dateInput.setAttribute('type', 'date');
+    dateInput.required = false;
+    thumbnailContentThree.append(dateLabel, dateInput);
 
     let thumbnailSubmit = document.createElement('button');
     thumbnailSubmit.setAttribute('type', 'submit');
@@ -67,6 +75,7 @@ export const thumbnailPrompt = (() => {
     thumbnailForm.append(
         thumbnailContentOne,
         thumbnailContentTwo,
+        thumbnailContentThree,
         thumbnailSubmit
     );
 
@@ -82,8 +91,7 @@ export const thumbnailPrompt = (() => {
 })();
 
 // Displays thumbnail content
-export const displayThumbnail = (title, description) => {
-    if(title ==  null || description == null){return;}
+export const displayThumbnail = (title, description, date) => {
 
     // Creates DOM preview based on inputs
     let thumbnail = document.createElement('button');
@@ -93,7 +101,9 @@ export const displayThumbnail = (title, description) => {
     newTitle.textContent = title;
     let newDescription = document.createElement('div');
     newDescription.textContent = description;
-    thumbnail.append(newTitle, newDescription);
+    let newDate = document.createElement('div');
+    newDate.textContent = date;
+    thumbnail.append(newTitle, newDescription, newDate);
     getDOM.previewContainer.appendChild(thumbnail);
 
     return (thumbnail);
@@ -159,25 +169,32 @@ export const cardPrompt = (() => {
     cardForm.setAttribute('name', 'thumbnail-form');
     cardForm.setAttribute('class', 'thumbnail-form');
 
+    let cardContentOne = document.createElement('div');
+    let infoLabel = document.createElement('label');
+    infoLabel.textContent = 'Info';
+    infoLabel.setAttribute('for', 'info');
     let infoInput = document.createElement('input');
     infoInput.setAttribute('class', 'info');
     infoInput.setAttribute('id', 'info');
     infoInput.setAttribute('type', 'text');
-    infoInput.setAttribute('placeholder', 'Details');
     infoInput.required = true;
+    cardContentOne.append(infoLabel, infoInput);
 
+    let cardContentTwo = document.createElement('div');
+    let dateLabel = document.createElement('label');
+    dateLabel.textContent = 'Date';
+    dateLabel.setAttribute('for', 'date');
     let dateInput = document.createElement('input');
-    dateInput.setAttribute('class', 'date');
+    dateInput.setAttribute('type', 'date');
     dateInput.setAttribute('id', 'date');
-    dateInput.setAttribute('type', 'text');
-    dateInput.setAttribute('placeholder', 'Date');
     dateInput.required = false;
+    cardContentTwo.append(dateLabel, dateInput);
 
     let cardSubmit = document.createElement('button');
     cardSubmit.setAttribute('type', 'submit');
     cardSubmit.textContent = 'Submit';
 
-    cardForm.append(infoInput, dateInput, cardSubmit);
+    cardForm.append(cardContentOne, cardContentTwo, cardSubmit);
     cardModal.appendChild(cardForm);
 
     return{

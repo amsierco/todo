@@ -11,5 +11,30 @@ export const projectStorage = (() => {
     }
     const getActiveProject = () => {return active;}
 
-    return {getStorage, addToStorage, setActiveProject, getActiveProject};
+    const populateExternalStorage = () => {
+        localStorage.setItem('projectData', storage);
+        localStorage.setItem('activeProject', active);
+        console.log('Storage Updated!');
+    }
+
+    const getExternalStorage = () => {
+        console.log('External Storage Fetch Called!');
+        storage = localStorage.getItem('projectData');
+        active = localStorage.getItem('activeProject');
+        console.log('storage: '+typeof(storage));
+    };
+
+    // if(storage != undefined || active != undefined){
+    //     storage.onchange = populateExternalStorage();
+    //     active.onchange = populateExternalStorage();
+    // }
+
+    return {
+        getStorage, 
+        addToStorage, 
+        setActiveProject, 
+        getActiveProject,
+        populateExternalStorage,
+        getExternalStorage
+    };
 })();

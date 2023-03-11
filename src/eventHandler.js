@@ -6,7 +6,35 @@ import { cardPrompt } from "./DOM";
 import { displayCard } from "./DOM";
 import { Project } from "./project";
 import { projectStorage } from "./storage";
+import { format } from 'date-fns'
+import { parse } from "date-fns";
 
+// On page load
+window.addEventListener('load', () => {
+    projectStorage.getExternalStorage();
+    let initialStorage = projectStorage.getStorage();
+
+    // Thumbnails
+    // console.log(initialStorage.length);
+    // for(let i=0; i<initialStorage.length; i++){
+    //     //displayThumbnail(title, description, date)
+    //     displayThumbnail(
+    //         initialStorage[i].title,
+    //         initialStorage[i].description,
+    //         initialStorage[i].date
+    //     );
+
+    //     console.log(
+    //         initialStorage[i].title+' '+
+    //         initialStorage[i].description+' '+
+    //         initialStorage[i].date
+    //     );
+
+        //getDOM.thumbnailContainer.append(initialStorage[i]);
+    // }
+
+    console.log('page loaded!');
+});
 
 // Load project page
 const loadProjectPage = () => {
@@ -80,6 +108,8 @@ export const AddNewCard = (obj) => {
         loadProjectPage();
 
     }, { once: true });
+
+    projectStorage.populateExternalStorage();
 };
 
 // Create new project
@@ -98,16 +128,21 @@ export const AddNewProject = (() => {
         e.preventDefault();
         let title = prompt.thumbnailForm.elements[0].value;
         let description = prompt.thumbnailForm.elements[1].value;
+        let date = prompt.thumbnailForm.elements[2].value;
+        if(date != ''){
+            date = parse(date, 'yyyy-MM-dd', new Date());
+            date = format(date, 'MM/dd/yyyy');
+        }
         prompt.thumbnailForm.reset();
         prompt.thumbnailModal.classList.remove('active');
 
         // Create new project object and add to storage
         let newProject = Project();
-        newProject.create(title, description);
+        newProject.create(title, description, date);
         projectStorage.addToStorage(newProject);
 
         // Display preview card
-        let thumbnail = displayThumbnail(title, description);
+        let thumbnail = displayThumbnail(title, description, date);
 
         // Load project page
         thumbnail.addEventListener('click', () => {
@@ -118,5 +153,8 @@ export const AddNewProject = (() => {
             projectStorage.setActiveProject(newProject);
             loadProjectPage();
         });
+
+        projectStorage.populateExternalStorage();
+
     });
 })();
