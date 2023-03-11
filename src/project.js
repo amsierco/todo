@@ -1,3 +1,14 @@
+// // Card Class
+const Card = (_info, _date) => {
+    let info = _info;
+    let date = _date;
+
+    return{
+        info,
+        date
+    };
+}
+
 // Project Class
 export const Project = () => {
     let todo, inProgress, done, title, description;
@@ -11,23 +22,25 @@ export const Project = () => {
         this.done = [];
     }
 
-    function setTitle(newTitle) {this.title = _newTitle;}
-    function setDescription(description) {this.description = _description;}
+
+    function add(_type, _info, _date){
+        let card = Card(_info, _date);
+        if(_type === 'todo'){
+            todo.push(card);
+        } else if (_type === 'in-progress'){
+            inProgress.push(card);
+        } else if (_type === 'done'){
+            done.push(card);
+        }
+    }
 
     return {
         create,
-        setTitle,
-        setDescription,
+        add,
         todo,
         inProgress,
         done,
         title,
         description
     };
-}
-
-// Card Class
-export const Card = () => {
-
-    return{};
 }

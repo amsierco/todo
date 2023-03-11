@@ -1,3 +1,4 @@
+import { AddNewCard } from "./eventHandler";
 
 // Get basic DOM elements
 export const getDOM = (() => {   
@@ -99,11 +100,11 @@ export const displayThumbnail = (title, description) => {
 
 // Create project window
 export const projectWindow = (() => {
-
+    /*
+    HTML class must be column followed by type
+    */
     let container = document.createElement('div');
     container.setAttribute('class', 'todo-container');
-
-
 
     let taskArray = [];
     for(let i=0; i<3; i++){
@@ -113,9 +114,13 @@ export const projectWindow = (() => {
         header.setAttribute('class', 'column-header');
         let content = document.createElement('div');
         content.setAttribute('class', 'column-content');
-        var newCardButton = document.createElement('button');
+
+        let newCardButton = document.createElement('button');
         newCardButton.setAttribute('class', 'new-card-button');
         newCardButton.textContent = 'Add Card';
+        newCardButton.addEventListener('click', () => {
+            AddNewCard(newCardButton.parentNode);
+        });
 
         header.textContent ='header';
         content.textContent ='content';
@@ -136,7 +141,61 @@ export const projectWindow = (() => {
     return{container};
 })();
 
-// Loads specific project window
-// export const loadPage = (obj) => {
+// Create project cards
+export const card = (() => {
+    let container = document.createElement('div');
+    container.setAttribute('class', 'card');
 
-// }
+    let info = document.createElement('div');
+    info.setAttribute('class', 'info');
+
+    let date = document.createElement('div');
+    date.setAttribute('class', 'date');
+
+    container.append(info, date);
+
+    return {container};
+})();
+
+// Create card prompt window
+export const cardPrompt = (() => {
+    if(document.querySelector('.card-prompt') != null){
+        document.querySelector('.card-prompt').remove();
+    }
+
+    let cardModal = document.createElement('div');
+    cardModal.setAttribute('class', 'card-prompt');
+
+    let cardForm = document.createElement('form');
+    cardForm.setAttribute('name', 'thumbnail-form');
+    cardForm.setAttribute('class', 'thumbnail-form');
+
+    let infoInput = document.createElement('input');
+    infoInput.setAttribute('class', 'info');
+    infoInput.setAttribute('id', 'info');
+    infoInput.setAttribute('type', 'text');
+    infoInput.setAttribute('placeholder', 'Details');
+    infoInput.required = true;
+
+    let dateInput = document.createElement('input');
+    dateInput.setAttribute('class', 'date');
+    dateInput.setAttribute('id', 'date');
+    dateInput.setAttribute('type', 'text');
+    dateInput.setAttribute('placeholder', 'Date');
+    dateInput.required = false;
+
+    let cardSubmit = document.createElement('button');
+    cardSubmit.setAttribute('type', 'submit');
+    cardSubmit.textContent = 'Submit';
+
+    cardForm.append(infoInput, dateInput, cardSubmit);
+    cardModal.appendChild(cardForm);
+
+    return{
+        cardModal,
+        cardForm,
+        infoInput,
+        dateInput
+    };
+
+})();

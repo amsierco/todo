@@ -5,9 +5,9 @@ module.exports = {
     './src/storage.js',
     './src/home.js', 
     './src/project.js', 
-    './src/DOM.js',
     './src/eventHandler.js',
-    './src/project.css'],
+    './src/project.css',
+    './src/DOM.js'],
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),

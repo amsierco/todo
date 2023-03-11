@@ -4,19 +4,53 @@ import { displayThumbnail } from "./DOM";
 import { Project } from "./project";
 import { projectStorage } from "./storage";
 import { projectWindow } from "./DOM";
+import { cardPrompt } from "./DOM";
 
+// // Load project page
 const loadProjectPage = (obj) => {
-    console.log('Loading page: '+obj.title);
-
+    //console.log('Loading page: '+obj.title);
     getDOM.mainPage.classList.toggle('active');
     let page = getDOM.projectPage;
-
-    // Fill in page with stored data //
-
     page.classList.toggle('active');
     page.appendChild(projectWindow.container);
+    projectStorage.setActiveProject(obj);
+    // LOAD PAGE //
+
 }
 
+// Add new card to project page
+export const AddNewCard = (obj) => {
+    /*
+    HTML class must be column followed by type
+    */
+    //console.log(obj.getAttribute('class').substring(7)); //Error on input class obj
+
+    document.querySelector('.todo-container').appendChild(cardPrompt.cardModal);
+    const prompt = cardPrompt;
+    let type = obj.getAttribute('class').substring(7);
+    /*projectStorage.getActiveProject;*/
+
+    prompt.cardModal.classList.toggle('active');
+    prompt.cardForm.addEventListener('submit', e => {
+
+        // Collect form data
+        e.preventDefault();
+        let info = prompt.cardForm.elements[0].value;
+        let date = prompt.cardForm.elements[1].value;
+        prompt.cardForm.reset();
+        prompt.cardModal.classList.remove('active');
+
+        if(info != null){
+            console.log(projectStorage.getActiveProject.title);
+            //projectStorage.getActiveProject.add(type, info, date);
+            console.log('Card Added');
+            //console.log(projectStorage.getActiveProject.todo);
+        }
+
+    });
+};
+
+// Create new project
 export const AddNewProject = (() => {
     const prompt = thumbnailPrompt;
 
@@ -39,13 +73,14 @@ export const AddNewProject = (() => {
         let newProject = Project();
         newProject.create(title, description);
         projectStorage.addToStorage(newProject);
-        
+
+        projectStorage.setActiveProject(newProject);
+        console.log('test: '+projectStorage.getActiveProject().title);
+
         // Display preview card
         let thumbnail = displayThumbnail(title, description);
         thumbnail.addEventListener('click', () => {
-            loadProjectPage(newProject);
+           loadProjectPage(newProject);
         });
-
     });
-
 })();
