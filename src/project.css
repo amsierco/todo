@@ -15,25 +15,30 @@ body {
     outline: none;
 }
 
-*, *::before, *::after {
+* {
     box-sizing: border-box;
 }
 
-button:active {
-    transform: translateY(1px);
+button:active,
+button:hover,
+button:focus {
+    transform: translateY(2px);
 }
 
 .icon {
     margin: 0px;
     padding: 0px;
     aspect-ratio: 1/1;
-    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
 }
 
 /**************************Main Page*/  
 .main-page.active {
-    display: block;
-    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .main-page {
@@ -44,21 +49,23 @@ button:active {
 .new-project-button{
     background-color: var(--primary);
     color: var(--secondary);
-    padding: 7px;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1rem;
     font-weight: 700;
     border-radius: 10px;
+    min-height: 40px;
 }
 
 .new-project-button > text {
     width: 60%;
 }
 
-.new-project-button:active {
-    transform: translateY(1px);
+.new-project-button:active,
+.new-project-button:hover {
+    transform: translateY(2px);
 }
 
 .thumbnail-prompt {
@@ -109,12 +116,11 @@ button:active {
 /****************************Project Preview*/
 .preview-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-template-rows: repeat(auto-fill, 180px);
-    column-gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 200px));
+    grid-template-rows: repeat(auto-fill, 200px);
+    column-gap: 20px;
     row-gap: 20px;
-    padding: 5px;
-
+    padding: 1.5rem;
     width: 100%;
     height: 100%; 
     background-color: var(--primary);
@@ -127,13 +133,12 @@ button:active {
     align-items: flex-start;
     aspect-ratio: 1/1;
     margin: 0px;
-    overflow: wrap;
-    flex-wrap: wrap;
     border-radius: 5px;
     border-bottom-right-radius: 20px;
     background-color: var(--secondary);
     font-size: .8rem;
     color: var(--primary);
+    min-width: 180px;
 }
 
 .preview > .header {
@@ -151,13 +156,14 @@ button:active {
     display: grid;
     background-color: var(--secondary);
     color: var(--primary);
-    grid-template-columns: 1fr 2fr 1fr 1fr;
-    column-gap: 5px;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr;
+    column-gap: 10px;
     min-height: 50px;
     padding: 25px;
     font-weight: 500;
     font-size: 1.2rem;
     align-items: center;
+    width: 100%;
 }
 
 .header > .logo {
@@ -189,7 +195,7 @@ button:active {
 .header > .searchbar {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .header > .searchbar > div {
@@ -200,6 +206,7 @@ button:active {
     gap: 2px;
     padding: 10px;
     width: 90%;
+    max-height: 35px;
 }
 
 .header > .searchbar input {
@@ -208,7 +215,7 @@ button:active {
     background: transparent;
     border: none;
     outline: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 /****************************Project Page*/
@@ -217,26 +224,26 @@ button:active {
 }
 
 .project-page.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100%;
 }
 
 .todo-container {
     background-color: var(--primary);
-    width: min(1000px, 100vw);
-    height: min(800px, 100vh);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 10px;
     padding: 10px;
+    padding-bottom: 30px;
 }
 
 .todo-container .column {
-    height: min(800px, 90%);
     background-color: var(--secondary);
     display: flex;
     flex-direction: column;
     gap: min(10px, 5%);
-    padding: 0px;
     position: relative;
     border: 5px solid var(--secondary);
     border-radius: 10px;
@@ -256,10 +263,10 @@ button:active {
     flex-direction: column;
     gap: 10px;
     font-size: .75rem;
-    overflow: none;
     padding-left: 10px;
     padding-right: 10px;
-    max-height: 90%;
+    max-height: 89%;
+    overflow-y: none;
 }
 
 .todo-container .new-card-button {
@@ -272,6 +279,11 @@ button:active {
     bottom: 0;
     width: 100%;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-height: 30px;
 }
 
 .card {
@@ -281,8 +293,14 @@ button:active {
     flex-direction: column;
     gap: 7px;
     padding: 7px;
-    overflow: none;
+    overflow: hidden;
     font-size: 1.1rem;
+}
+
+.card .info {
+    max-width: 240px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .card-prompt {
@@ -321,23 +339,49 @@ button:active {
 }
 
 /****************************Media*/
-@media(max-width: 600px){
+@media screen and (max-width: 600px){
     .preview-container{
         display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(auto-fill, minmax(50px, 250px));
         grid-gap: 10px;
-        padding-left: 10%;
-        padding-right: 10%;
         height: 100%;
     }
 
-    .preview {
-        aspect-ratio: unset;
-        min-height: 50px;
+    .main-page.active > .header {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, minmax(50px,1fr));
+        row-gap: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        min-height: 150px;
     }
 
-    .main-page.active > .header {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+    .project-page.active > .todo-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .column-content {
+        padding-bottom: 10%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+@media screen and (min-width: 1400px){
+    .main-page.active {
+        align-items: center;
+    }
+
+    .main-page.active > .header,
+    .main-page.active > .preview-container,
+    .main-page.active > .thubnail-container,
+    .project-page.active > .todo-container{
+        padding-left: 5%;
+        padding-right: 5%;
     }
 }

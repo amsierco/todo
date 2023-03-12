@@ -14,7 +14,7 @@ document.querySelector('.JSON').addEventListener('click', () => {
     localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
     //localStorage.removeItem("activeProject", JSON.stringify(projectStorage.getActiveProject()));
     console.log('JSON Deleted');
-});
+});     
 
 // On page load
 window.addEventListener('load', () => {    

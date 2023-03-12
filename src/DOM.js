@@ -129,6 +129,15 @@ export const projectWindow = (() => {
         let newCardButton = document.createElement('button');
         newCardButton.setAttribute('class', 'new-card-button');
         newCardButton.textContent = 'Add Card';
+        let svg = document.createElement('svg');
+        svg.innerHTML = 
+        `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
+                <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+            </svg>
+        `;
+        svg.setAttribute('class', 'icon');
+        newCardButton.appendChild(svg);
         newCardButton.addEventListener('click', () => {
             AddNewCard(newCardButton.parentNode);
         });
