@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
   entry: [
     './src/storage.js',
-    './src/home.js', 
     './src/project.js', 
     './src/eventHandler.js',
     './src/project.css',
