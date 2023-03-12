@@ -1,5 +1,3 @@
-import { parse } from "date-fns";
-import { format } from "date-fns";
 import { projectStorage } from "./storage";
 
 // Card Class
@@ -15,21 +13,12 @@ const Card = (_info, _date) => {
 
 // Project Class
 export const Project = (title, description, date) => {
-    //let title, description, date;
     let todo = [];
     let inProgress = [];
     let done = [];
     
     // Add card function
     function add(_type, _info, _date){
-
-        // JSON null storage check
-        if(todo == undefined){
-            console.log('todo is UNDEFINED');
-            this.todo = [];
-            this.inProgress = [];
-            this.done = [];
-        }
 
         // Add card
         if(_type === 'todo'){
@@ -43,6 +32,7 @@ export const Project = (title, description, date) => {
         projectStorage.populateExternalStorage();
     }
 
+    // Add JSON cards to new Project obj on page load
     function JSONConvert(obj){
         // Todo
         let _todo = Array.from(obj.todo);

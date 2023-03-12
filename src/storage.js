@@ -1,4 +1,3 @@
-
 // Page project storage
 export const projectStorage = (() => {
     var storage = [];
@@ -22,19 +21,13 @@ export const projectStorage = (() => {
     function populateExternalStorage() {     
         localStorage.setItem("projectData", JSON.stringify(storage));
         //localStorage.setItem("activeProject", JSON.stringify(active));
-
-        // Debugging
-
-      //  console.clear();
-       // console.log('Local Storage: \n'+(localStorage.getItem("projectData")));
     }
 
     function getExternalStorage() {
-        // //console.log('External Storage Fetch Called!');
+
         tempStorage = JSON.parse(localStorage.getItem("projectData"));
-        // //active = JSON.parse(localStorage.getItem("activeProject"));
+        //active = JSON.parse(localStorage.getItem("activeProject"));
         if(tempStorage === null){tempStorage=[];}
-        //console.log('Loaded Local Storage: '+JSON.stringify(tempStorage));
         return (tempStorage);
     }
 

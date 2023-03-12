@@ -9,19 +9,17 @@ import { projectStorage } from "./storage";
 import { format } from 'date-fns'
 import { parse } from "date-fns";
 
-// TEMP Delete JSON
+// Debugging Delete JSON
 document.querySelector('.JSON').addEventListener('click', () => {
     localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
-    localStorage.removeItem("activeProject", JSON.stringify(projectStorage.getActiveProject()));
+    //localStorage.removeItem("activeProject", JSON.stringify(projectStorage.getActiveProject()));
     console.log('JSON Deleted');
 });
 
 // On page load
 window.addEventListener('load', () => {    
     let initialStorage = projectStorage.getExternalStorage();
-    console.log(
-        initialStorage.length
-        );
+
     // Thumbnails
     for(let i=0; i<initialStorage.length; i++){
 
@@ -50,39 +48,7 @@ window.addEventListener('load', () => {
             projectStorage.setActiveProject(convertedProject);
             loadProjectPage();
         });
-//&&//
-    //     let newProject = Project();
-    //     newProject.create(
-    //         initialStorage[i].title,
-    //         initialStorage[i].description,
-    //         initialStorage[i].date
-    //     );
-    //     projectStorage.addToStorage(newProject);
-
-    //     // console.log('this: '+            
-    //     //     initialStorage[i].title,
-    //     //     initialStorage[i].description,
-    //     //     initialStorage[i].date
-    //     // );
-
-    //     let retrievedThumbnail = displayThumbnail(
-    //         initialStorage[i].title,
-    //         initialStorage[i].description,
-    //         initialStorage[i].date
-    //     );
-
-    //     // Load project page
-    //     retrievedThumbnail.addEventListener('click', () => {
-    //         console.log('New button clicked!');
-    //         getDOM.mainPage.classList.toggle('active');
-    //         let page = getDOM.projectPage;
-    //         page.classList.toggle('active');
-    //         page.appendChild(projectWindow.container);
-    //         projectStorage.setActiveProject(newProject);
-    //         loadProjectPage();
-    //     });
     }
-    console.log('Page Loaded');
 });
 
 // Load project page

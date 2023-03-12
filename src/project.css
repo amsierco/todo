@@ -11,35 +11,55 @@ body {
     --secondary: #323232;
     --tertiary: #201E20;
     font-family: optima, sans-serif;
+    height: 100%;
+    outline: none;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 button:active {
     transform: translateY(1px);
 }
 
-/* Main Page */  
+.icon {
+    margin: 0px;
+    padding: 0px;
+    aspect-ratio: 1/1;
+    width: 30px;
+}
+
+/**************************Main Page*/  
 .main-page.active {
     display: block;
+    height: 90vh;
 }
 
 .main-page {
     display: none;
 }
 
-/* Thumbnail Card */
+/***************************Thumbnail*/
 .new-project-button{
     background-color: var(--primary);
     color: var(--secondary);
-    border-radius: 5px;
-    border-bottom-right-radius: 10px;
-    border-top-left-radius: 10px;
     padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.new-project-button > text {
+    width: 60%;
 }
 
 .new-project-button:active {
     transform: translateY(1px);
 }
-
 
 .thumbnail-prompt {
     display: none;
@@ -86,16 +106,17 @@ button:active {
     text-align: center;
 }
 
-/* Project Preview Card */
+/****************************Project Preview*/
 .preview-container {
     display: grid;
-    /* Make if more adaptable */
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fill, 180px);
+    column-gap: 15px;
+    row-gap: 20px;
     padding: 5px;
 
-    width: min(1000px, 100vw);
-    height: min(800px, 100vh);
+    width: 100%;
+    height: 100%; 
     background-color: var(--primary);
 }
 
@@ -104,11 +125,9 @@ button:active {
     flex-direction: column;
     padding: .5rem;
     align-items: flex-start;
-    min-width: 100px;
-    min-height: 100px;
-    max-height: 150px;
     aspect-ratio: 1/1;
-    overflow: hidden;
+    margin: 0px;
+    overflow: wrap;
     flex-wrap: wrap;
     border-radius: 5px;
     border-bottom-right-radius: 20px;
@@ -124,26 +143,75 @@ button:active {
 }
 
 .preview:hover {
-    /* box-shadow: 0 0 10px 0px rgba(0,0,0,0.5); */
     transform: translateY(2px);
 }
 
-/* Header */
+/***************************Main Page Header*/
 .main-page.active > .header {
     display: grid;
     background-color: var(--secondary);
     color: var(--primary);
     grid-template-columns: 1fr 2fr 1fr 1fr;
-    align-items: center;
+    column-gap: 5px;
     min-height: 50px;
-    max-height: 10%;
-    padding: 5px;
-    text-align: center;
+    padding: 25px;
     font-weight: 500;
-    font-size: 2rem;
+    font-size: 1.2rem;
+    align-items: center;
 }
 
-/* Project Page */
+.header > .logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.header > .logo > .icon{
+    fill: var(--primary);
+    width: 40px;
+}
+
+.header > .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.header > .profile svg {
+    fill: var(--primary);
+}
+
+.header > .searchbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header > .searchbar > div {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10px;
+    gap: 2px;
+    padding: 10px;
+    width: 90%;
+}
+
+.header > .searchbar input {
+    word-wrap: break-word;
+    margin-right: 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+/****************************Project Page*/
 .project-page {
     display: none;
 }
@@ -217,10 +285,6 @@ button:active {
     font-size: 1.1rem;
 }
 
-.thumbnail-prompt {
-    display: none;
-}
-
 .card-prompt {
     display: none;
 }
@@ -254,4 +318,26 @@ button:active {
     border: none;
     border-bottom: 1px solid black;
     padding: 2px;
+}
+
+/****************************Media*/
+@media(max-width: 600px){
+    .preview-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
+        grid-gap: 10px;
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 100%;
+    }
+
+    .preview {
+        aspect-ratio: unset;
+        min-height: 50px;
+    }
+
+    .main-page.active > .header {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
