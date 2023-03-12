@@ -10,9 +10,9 @@ import { format } from 'date-fns'
 import { parse } from "date-fns";
 
 // Debugging Delete JSON
-document.querySelector('.JSON').addEventListener('click', () => {
-    localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
-});     
+// document.querySelector('.JSON').addEventListener('click', () => {
+//     localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
+// });     
 
 // Remove from local storage
 export const deleteStorage = (obj, type) => {
@@ -31,11 +31,9 @@ export const deleteStorage = (obj, type) => {
     for(let i=0; i<type.length; i++){
         // Project card delete
         if(type[i] === obj){
-            //localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
             projectStorage.getActiveProject().removeItem(i, type);
-            //getDOM.previewContainer.replaceChildren();
-            reloadPage();
-            console.log('DONE :)');
+            //reloadPage(); Causes thumbnail duplication
+            loadProjectPage();
             return;  
         }
     }
@@ -94,6 +92,8 @@ const loadProjectPage = () => {
     projectWindow.taskArray[1].querySelector('.column-content').replaceChildren();
     projectWindow.taskArray[2].querySelector('.column-content').replaceChildren();
 
+    getDOM.projectPage.querySelector('.name').textContent = active.title;
+
     // Todo
     for(let i=0; i<active.todo.length; i++){
         let newCard = displayCard(
@@ -112,6 +112,9 @@ const loadProjectPage = () => {
             active.inProgress[i].info,
             active.inProgress[i].date
         );
+        newCard.addEventListener('click', () => {
+            deleteStorage(active.inProgress[i], active.inProgress);
+        });
         projectWindow.taskArray[1].querySelector('.column-content').append(newCard);
     }
 
@@ -121,6 +124,9 @@ const loadProjectPage = () => {
             active.done[i].info,
             active.done[i].date
         );
+        newCard.addEventListener('click', () => {
+            deleteStorage(active.done[i], active.done);
+        });
         projectWindow.taskArray[2].querySelector('.column-content').append(newCard);
     }
 }
@@ -130,21 +136,26 @@ export const AddNewCard = (obj) => {
     /*
     HTML class must be column followed by type
     */
-    document.querySelector('.todo-container').appendChild(cardPrompt.cardModal);
+    let type = obj.getAttribute('class').substring(7);
+    document.querySelector('.column.'+type+' .new-card-button').append(cardPrompt.cardModal);
     const prompt = cardPrompt;
 
     prompt.cardModal.classList.toggle('active');
+    prompt.cardForm.reset();
     prompt.cardForm.addEventListener('submit', e => {
 
         // Collect form data
         e.preventDefault();
         let info = prompt.cardForm.elements[0].value;
+
+        // Bad form submission catch
+        if(info == ''){;return;}
+
         let date = prompt.cardForm.elements[1].value;
         if(date != ''){
             date = parse(date, 'yyyy-MM-dd', new Date());
             date = format(date, 'MM/dd/yyyy');
         }
-        let type = obj.getAttribute('class').substring(7);
         prompt.cardForm.reset();
         prompt.cardModal.classList.remove('active');
 
@@ -165,7 +176,16 @@ export const AddNewProject = (() => {
     const prompt = thumbnailPrompt;
 
     // Display thumbnail prompt
-    getDOM.newProjectButton.addEventListener('click', () => {
+    getDOM.newProjectButton.addEventListener('click', (e) => {
+        if(
+            e.target.className == 'thumbnail-prompt active' ||
+            e.target.parentNode.className == 'thumbnail-prompt active' ||
+            e.target.parentNode.className == 'thumbnail-form' ||
+            e.target.parentNode.parentNode.className == 'thumbnail-form' ||
+            e.target.parentNode.parentNode.className == 'thumbnail-prompt active')
+        {
+            return;
+        } 
         prompt.thumbnailModal.classList.toggle('active');
     });
 

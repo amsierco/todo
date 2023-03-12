@@ -37,7 +37,7 @@ button:focus {
 .main-page.active {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     width: 100%;
 }
 
@@ -57,6 +57,8 @@ button:focus {
     font-weight: 700;
     border-radius: 10px;
     min-height: 40px;
+    position: relative;
+    z-index: 3;
 }
 
 .new-project-button > text {
@@ -73,22 +75,28 @@ button:focus {
 }
 
 .thumbnail-prompt.active {
+    color: var(--primary);
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
-    max-width: 200px;    
+    background-color: var(--secondary);
+    border: 2px solid var(--primary);
+    max-width: 250px;    
+    min-width: 140px;  
     padding: 0.75rem;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 8px;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: auto;
+    right: auto;
+    top: 45px;
+    align-items: flex-start;
+    z-index: 3;
 }
 
 .thumbnail-form {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     width: 100%;
 }
@@ -97,16 +105,19 @@ button:focus {
     margin-right: 16px;
 }
 
-.thumbnail-form input {
-    background-color: whitesmoke;
+.thumbnail-form input{
+    background: transparent;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary);
     padding: 2px;
+    color: var(--primary);
 }
 
-.thumbnail-form input:hover,
-.thumbnail-form input:focus{
-    border-bottom: 1px solid rgba(0,0,0,0.5);
+.thumbnail-form button {
+    color: var(--primary);
+    background: transparent;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
 }
 
 .thumbnail-prompt > div{
@@ -139,6 +150,10 @@ button:focus {
     font-size: .8rem;
     color: var(--primary);
     min-width: 180px;
+    text-align: left;
+    padding-bottom: 10%;
+    position: relative;
+    z-index: 1;
 }
 
 .preview > .header {
@@ -159,6 +174,9 @@ button:focus {
     border: 2px solid var(--primary);
     background: transparent;
     color: var(--primary);
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
 }
 
 .preview svg {
@@ -245,6 +263,25 @@ button:focus {
     background-color: var(--primary);
 }
 
+.project-page.active > .header {
+    background-color: var(--secondary);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 5px;
+    padding: 10px;
+    font-size: clamp(1rem, 2rem, 3rem);
+    font-weight: 700;
+    color: var(--primary);
+    max-height: 200px;
+}
+
+.project-page.active > .header > button {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    border-radius: 10px;
+}
+
 .todo-container {
     background-color: var(--primary);
     display: grid;
@@ -282,7 +319,7 @@ button:focus {
     font-size: .75rem;
     padding-left: 10px;
     padding-right: 10px;
-    max-height: 89%;
+    max-height: 85%;
     overflow-y: none;
 }
 
@@ -301,6 +338,11 @@ button:focus {
     align-items: center;
     gap: 10px;
     max-height: 30px;
+    position: absolute;
+    bottom: 5px;
+    left: auto;
+    right: auto;
+    z-index: 3;
 }
 
 .card {
@@ -343,17 +385,21 @@ button:focus {
 .card-prompt.active {
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: var(--secondary);
+    color: var(--primary);
     max-width: 200px;    
     margin: 0px;
     padding: 0.75rem;
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 0 0 10px 2px rgba(200,200,200,1);
-
     position: absolute;
-    left: 0;
-    top: 0;
+    z-index: 3;
+    bottom: 40px;
+    left: auto;
+    right: auto;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    min-width: 180px;
 }
 
 .card-form {
@@ -362,12 +408,14 @@ button:focus {
     align-items: flex-start;
     gap: 5px;
     width: 100%;
+    background: transparent;
+    color: var(--primary);
 }
 
 .card-form input {
-    background-color: whitesmoke;
+    background: transparent;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary);
     padding: 2px;
 }
 

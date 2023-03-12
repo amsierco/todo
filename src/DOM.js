@@ -8,8 +8,8 @@ export const getDOM = (() => {
     const thumbnailContainer = document.querySelector('.thumbnail-container');
     const previewContainer = document.querySelector('.preview-container');
 
-    //TEMP
-    document.querySelector('.TEMP').addEventListener('click', () => {
+    // Return to home page
+    document.querySelector('.home').addEventListener('click', () => {
         mainPage.classList.toggle('active');
         projectPage.classList.toggle('active');
     });
@@ -79,7 +79,7 @@ export const thumbnailPrompt = (() => {
         thumbnailSubmit
     );
 
-    getDOM.thumbnailContainer.appendChild(thumbnailModal);
+    document.querySelector('.new-project-button').appendChild(thumbnailModal);
 
     return {
         thumbnailModal,
@@ -147,7 +147,16 @@ export const projectWindow = (() => {
         `;
         svg.setAttribute('class', 'icon');
         newCardButton.appendChild(svg);
-        newCardButton.addEventListener('click', () => {
+        newCardButton.addEventListener('click', (e) => {
+            if(
+                e.target.className == 'card-prompt active' ||
+                e.target.parentNode.className == 'card-prompt active' ||
+                e.target.parentNode.className == 'thumbnail-form' ||
+                e.target.parentNode.parentNode.className == 'thumbnail-form' ||
+                e.target.parentNode.parentNode.className == 'card-prompt active')
+            {
+                return;
+            } 
             AddNewCard(newCardButton.parentNode);
         });
 
