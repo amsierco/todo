@@ -147,8 +147,22 @@ button:focus {
     margin-bottom: 10px;
 }
 
-.preview:hover {
+.preview:hover{
     transform: translateY(2px);
+}
+
+.preview > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+}
+
+.preview svg {
+    fill: var(--primary);
 }
 
 /***************************Main Page Header*/
@@ -228,6 +242,7 @@ button:focus {
     flex-direction: column;
     width: 100%;
     max-height: 100%;
+    background-color: var(--primary);
 }
 
 .todo-container {
@@ -237,6 +252,7 @@ button:focus {
     column-gap: 10px;
     padding: 10px;
     padding-bottom: 30px;
+    min-height: 100vh;
 }
 
 .todo-container .column {
@@ -247,6 +263,7 @@ button:focus {
     position: relative;
     border: 5px solid var(--secondary);
     border-radius: 10px;
+    min-height: 200px;
 }
 
 .todo-container .column-header {
@@ -295,6 +312,22 @@ button:focus {
     padding: 7px;
     overflow: hidden;
     font-size: 1.1rem;
+}
+
+.card button {
+    display: flex;  
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--primary);
+    max-height: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.card button svg {
+    fill: var(--primary);
 }
 
 .card .info {

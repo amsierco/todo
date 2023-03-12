@@ -103,7 +103,16 @@ export const displayThumbnail = (title, description, date) => {
     newDescription.textContent = description;
     let newDate = document.createElement('div');
     newDate.textContent = date;
-    thumbnail.append(newTitle, newDescription, newDate);
+
+    let removeButton = document.createElement('button');
+    removeButton.innerHTML=
+        `<text>Remove</text>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class='icon'>
+            <path d="M19,13H5V11H19V13Z" />
+        </svg>
+    `;
+    removeButton.setAttribute('class', 'remove');
+    thumbnail.append(newTitle, newDescription, newDate, removeButton);
     getDOM.previewContainer.appendChild(thumbnail);
 
     return (thumbnail);
@@ -228,7 +237,17 @@ export const displayCard = (info, date) => {
     let newDate = document.createElement('div');
     newDate.setAttribute('class', 'date');
     newDate.textContent = date;
-    card.append(newInfo, newDate);
+
+    let removeButton = document.createElement('button');
+    removeButton.innerHTML=
+        `<text>Remove</text>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class='icon'>
+            <path d="M19,13H5V11H19V13Z" />
+        </svg>
+    `;
+    removeButton.setAttribute('class', 'remove');
+
+    card.append(newInfo, newDate, removeButton);
     getDOM.previewContainer.appendChild(card);
 
     return (card);

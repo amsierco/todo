@@ -65,9 +65,17 @@ export const Project = (title, description, date) => {
         }
     }
 
+    function removeItem(item, type){
+        console.log(type);
+        type.splice(item, 1);
+        console.log(type);
+        projectStorage.populateExternalStorage();
+    }
+
     return {
         add,
         JSONConvert,
+        removeItem,
         title,
         description,
         date,

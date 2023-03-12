@@ -20,15 +20,18 @@ export const projectStorage = (() => {
 
     function populateExternalStorage() {     
         localStorage.setItem("projectData", JSON.stringify(storage));
-        //localStorage.setItem("activeProject", JSON.stringify(active));
     }
 
     function getExternalStorage() {
-
+        storage = [];
         tempStorage = JSON.parse(localStorage.getItem("projectData"));
-        //active = JSON.parse(localStorage.getItem("activeProject"));
         if(tempStorage === null){tempStorage=[];}
         return (tempStorage);
+    }
+
+    function removeItem(item){
+        storage.splice(item, 1);
+        populateExternalStorage();
     }
 
     return {
@@ -37,6 +40,7 @@ export const projectStorage = (() => {
         setActiveProject, 
         getActiveProject,
         populateExternalStorage,
-        getExternalStorage
+        getExternalStorage,
+        removeItem
     };
 })();

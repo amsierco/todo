@@ -12,14 +12,38 @@ import { parse } from "date-fns";
 // Debugging Delete JSON
 document.querySelector('.JSON').addEventListener('click', () => {
     localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
-    //localStorage.removeItem("activeProject", JSON.stringify(projectStorage.getActiveProject()));
-    console.log('JSON Deleted');
 });     
 
-// On page load
-window.addEventListener('load', () => {    
-    let initialStorage = projectStorage.getExternalStorage();
+// Remove from local storage
+export const deleteStorage = (obj, type) => {
 
+    for(let i=0; i<projectStorage.getStorage().length; i++){
+        // Entire project delete
+        if(projectStorage.getStorage()[i] === obj){
+            localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
+            projectStorage.removeItem(i);
+            getDOM.previewContainer.replaceChildren();
+            reloadPage();
+            return;  
+        }
+    }
+
+    for(let i=0; i<type.length; i++){
+        // Project card delete
+        if(type[i] === obj){
+            //localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
+            projectStorage.getActiveProject().removeItem(i, type);
+            //getDOM.previewContainer.replaceChildren();
+            reloadPage();
+            console.log('DONE :)');
+            return;  
+        }
+    }
+}
+
+// On page load
+const reloadPage = () => {
+    let initialStorage = projectStorage.getExternalStorage();
     // Thumbnails
     for(let i=0; i<initialStorage.length; i++){
 
@@ -40,7 +64,11 @@ window.addEventListener('load', () => {
         ); 
 
         // Load project page
-        thumbnail.addEventListener('click', () => {
+        thumbnail.addEventListener('click', (e) => {
+            if(e.target.className == 'remove' ||
+            e.target.parentNode.className == 'remove'){
+                return;
+            }                
             getDOM.mainPage.classList.toggle('active');
             let page = getDOM.projectPage;
             page.classList.toggle('active');
@@ -48,8 +76,13 @@ window.addEventListener('load', () => {
             projectStorage.setActiveProject(convertedProject);
             loadProjectPage();
         });
+
+        thumbnail.querySelector('.remove').addEventListener('click', () => {
+            deleteStorage(convertedProject);
+        });
     }
-});
+}
+window.addEventListener('load', () => {reloadPage();});
 
 // Load project page
 const loadProjectPage = () => {
@@ -67,6 +100,9 @@ const loadProjectPage = () => {
             active.todo[i].info,
             active.todo[i].date
         );
+        newCard.addEventListener('click', () => {
+            deleteStorage(active.todo[i], active.todo);
+        });
         projectWindow.taskArray[0].querySelector('.column-content').append(newCard);
     }
 
@@ -163,13 +199,21 @@ export const AddNewProject = (() => {
         );
 
         // Load project page
-        thumbnail.addEventListener('click', () => {
+        thumbnail.addEventListener('click', (e) => {
+            if(e.target.className == 'remove' ||
+            e.target.parentNode.className == 'remove'){
+                return;
+            }                
             getDOM.mainPage.classList.toggle('active');
             let page = getDOM.projectPage;
             page.classList.toggle('active');
             page.appendChild(projectWindow.container);
             projectStorage.setActiveProject(newProject);
             loadProjectPage();
+        });
+
+        thumbnail.querySelector('.remove').addEventListener('click', () => {
+            deleteStorage(newProject);
         });
     });
 })();
