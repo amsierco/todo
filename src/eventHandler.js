@@ -9,45 +9,84 @@ import { projectStorage } from "./storage";
 import { format } from 'date-fns'
 import { parse } from "date-fns";
 
-// On page load
-window.addEventListener('load', () => {
-    let initialStorage = projectStorage.getExternalStorage();
-    console.log('Retrieved length: '+initialStorage.length);
+// TEMP Delete JSON
+document.querySelector('.JSON').addEventListener('click', () => {
+    localStorage.removeItem("projectData", JSON.stringify(projectStorage.getStorage()));
+    localStorage.removeItem("activeProject", JSON.stringify(projectStorage.getActiveProject()));
+    console.log('JSON Deleted');
+});
 
+// On page load
+window.addEventListener('load', () => {    
+    let initialStorage = projectStorage.getExternalStorage();
+    console.log(
+        initialStorage.length
+        );
     // Thumbnails
     for(let i=0; i<initialStorage.length; i++){
-        let newProject = Project();
-        newProject.create(
+
+        // Convert JSON back to Project class object
+        let convertedProject = Project(
             initialStorage[i].title,
             initialStorage[i].description,
             initialStorage[i].date
         );
+        convertedProject.JSONConvert(initialStorage[i]);
+        projectStorage.addToStorage(convertedProject);
 
-        projectStorage.addToStorage(newProject);
-
-        let retrievedThumbnail = displayThumbnail(
-            initialStorage[i].title,
-            initialStorage[i].description,
-            initialStorage[i].date
-        );
+        // Display preview card
+        let thumbnail = displayThumbnail(
+            convertedProject.title, 
+            convertedProject.description, 
+            convertedProject.date
+        ); 
 
         // Load project page
-        retrievedThumbnail.addEventListener('click', () => {
-            console.log('New button clicked!');
+        thumbnail.addEventListener('click', () => {
             getDOM.mainPage.classList.toggle('active');
             let page = getDOM.projectPage;
             page.classList.toggle('active');
             page.appendChild(projectWindow.container);
-            projectStorage.setActiveProject(newProject);
+            projectStorage.setActiveProject(convertedProject);
             loadProjectPage();
         });
-    }
+//&&//
+    //     let newProject = Project();
+    //     newProject.create(
+    //         initialStorage[i].title,
+    //         initialStorage[i].description,
+    //         initialStorage[i].date
+    //     );
+    //     projectStorage.addToStorage(newProject);
 
+    //     // console.log('this: '+            
+    //     //     initialStorage[i].title,
+    //     //     initialStorage[i].description,
+    //     //     initialStorage[i].date
+    //     // );
+
+    //     let retrievedThumbnail = displayThumbnail(
+    //         initialStorage[i].title,
+    //         initialStorage[i].description,
+    //         initialStorage[i].date
+    //     );
+
+    //     // Load project page
+    //     retrievedThumbnail.addEventListener('click', () => {
+    //         console.log('New button clicked!');
+    //         getDOM.mainPage.classList.toggle('active');
+    //         let page = getDOM.projectPage;
+    //         page.classList.toggle('active');
+    //         page.appendChild(projectWindow.container);
+    //         projectStorage.setActiveProject(newProject);
+    //         loadProjectPage();
+    //     });
+    }
+    console.log('Page Loaded');
 });
 
 // Load project page
 const loadProjectPage = () => {
-    console.log('title: '+projectStorage.getActiveProject().title+' todo: '+projectStorage.getActiveProject().todo.length+' prog: '+projectStorage.getActiveProject().inProgress.length+' done: '+projectStorage.getActiveProject().done.length);
     // Active project reference
     let active = projectStorage.getActiveProject();
 
@@ -82,8 +121,6 @@ const loadProjectPage = () => {
         );
         projectWindow.taskArray[2].querySelector('.column-content').append(newCard);
     }
-    
-
 }
 
 // Add new card to project page
@@ -91,10 +128,8 @@ export const AddNewCard = (obj) => {
     /*
     HTML class must be column followed by type
     */
-
     document.querySelector('.todo-container').appendChild(cardPrompt.cardModal);
     const prompt = cardPrompt;
-    let type = obj.getAttribute('class').substring(7);
 
     prompt.cardModal.classList.toggle('active');
     prompt.cardForm.addEventListener('submit', e => {
@@ -103,16 +138,18 @@ export const AddNewCard = (obj) => {
         e.preventDefault();
         let info = prompt.cardForm.elements[0].value;
         let date = prompt.cardForm.elements[1].value;
+        if(date != ''){
+            date = parse(date, 'yyyy-MM-dd', new Date());
+            date = format(date, 'MM/dd/yyyy');
+        }
+        let type = obj.getAttribute('class').substring(7);
         prompt.cardForm.reset();
-
         prompt.cardModal.classList.remove('active');
 
         // Add to appropriate storage in project class
         if(info != null){
             projectStorage.getActiveProject().add(type, info, date);
         }
-
-        projectStorage.populateExternalStorage();
 
         // Display new card
         loadProjectPage();
@@ -146,12 +183,18 @@ export const AddNewProject = (() => {
         prompt.thumbnailModal.classList.remove('active');
 
         // Create new project object and add to storage
-        let newProject = Project();
-        newProject.create(title, description, date);
+        let newProject = Project(title, description, date);
+        //newProject.create(title, description, date);
         projectStorage.addToStorage(newProject);
 
+        //console.log('this: '+newProject.getTitle());
+
         // Display preview card
-        let thumbnail = displayThumbnail(title, description, date);
+        let thumbnail = displayThumbnail(
+            newProject.title, 
+            newProject.description, 
+            newProject.date
+        );
 
         // Load project page
         thumbnail.addEventListener('click', () => {
@@ -162,8 +205,5 @@ export const AddNewProject = (() => {
             projectStorage.setActiveProject(newProject);
             loadProjectPage();
         });
-
-        projectStorage.populateExternalStorage();
-
     });
 })();
